@@ -166,7 +166,143 @@ td.nt{font-size:11px;color:var(--gray600);text-align:left;min-width:100px}
     <button class="hbtn hbtn-warn" onclick="doLogout()">🚪 로그아웃</button>
   </div>
 </div>
-<div class="tab-bar" id="tab-bar"><div class="tab active" data-tab="master" onclick="switchTab('master')">📋 마스터</div><div class="tab-div">│</div><span style="font-size:10px;font-weight:700;color:#1d4ed8;padding:10px 6px 10px 2px;white-space:nowrap;align-self:center">🏥 의대</span><div class="tab tab-med" data-tab="Newcastle" onclick="switchTab('Newcastle')">Newcastle</div><div class="tab tab-med" data-tab="UNSW" onclick="switchTab('UNSW')">UNSW</div><div class="tab tab-med" data-tab="WSU" onclick="switchTab('WSU')">WSU</div><div class="tab tab-med" data-tab="Monash" onclick="switchTab('Monash')">Monash</div><div class="tab tab-med" data-tab="Tasmania" onclick="switchTab('Tasmania')">Tasmania</div><div class="tab tab-med" data-tab="Flinders" onclick="switchTab('Flinders')">Flinders</div><div class="tab tab-med" data-tab="Adelaide 의대" onclick="switchTab('Adelaide 의대')">Adelaide 의대</div><div class="tab tab-med" data-tab="Curtin" onclick="switchTab('Curtin')">Curtin</div><div class="tab tab-med" data-tab="Macquarie" onclick="switchTab('Macquarie')">Macquarie</div><div class="tab tab-med" data-tab="Sydney 의대" onclick="switchTab('Sydney 의대')">Sydney 의대</div><div class="tab tab-med" data-tab="Melbourne 의대" onclick="switchTab('Melbourne 의대')">Melbourne 의대</div><div class="tab tab-med" data-tab="Griffith 의대" onclick="switchTab('Griffith 의대')">Griffith 의대</div><div class="tab tab-med" data-tab="UQ 의대" onclick="switchTab('UQ 의대')">UQ 의대</div><div class="tab tab-med" data-tab="UWA" onclick="switchTab('UWA')">UWA</div><div class="tab-div">│</div><span style="font-size:10px;font-weight:700;color:#9d174d;padding:10px 6px 10px 2px;white-space:nowrap;align-self:center">🦷 치대</span><div class="tab tab-dent" data-tab="UQ 치대" onclick="switchTab('UQ 치대')">UQ 치대</div><div class="tab tab-dent" data-tab="JCU 치대" onclick="switchTab('JCU 치대')">JCU 치대</div><div class="tab tab-dent" data-tab="CSU 치대" onclick="switchTab('CSU 치대')">CSU 치대</div><div class="tab tab-dent" data-tab="Adelaide 치대" onclick="switchTab('Adelaide 치대')">Adelaide 치대</div><div class="tab tab-dent" data-tab="La Trobe 치대" onclick="switchTab('La Trobe 치대')">La Trobe 치대</div><div class="tab tab-dent" data-tab="Griffith 치대" onclick="switchTab('Griffith 치대')">Griffith 치대</div><div class="tab tab-dent" data-tab="UWA 치대" onclick="switchTab('UWA 치대')">UWA 치대</div><div class="tab-div">│</div><div class="tab" data-tab="__trash__" onclick="switchTab('__trash__')" style="color:#dc2626">🗑️ 휴지통 (2)</div></div>
+<style>
+.tab-bar2{background:#fff;border-bottom:2px solid var(--gray200);padding:0 1rem;display:flex;gap:2px;overflow-x:auto;position:sticky;top:52px;z-index:100;align-items:stretch}
+.tab-group{position:relative;display:flex;align-items:stretch}
+.tab-group-btn{padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:none;font-family:inherit;display:flex;align-items:center;gap:4px;border-bottom:3px solid transparent;white-space:nowrap;color:var(--gray600)}
+.tab-group-btn:hover{background:var(--gray50)}
+.tab-group-btn.active-group{border-bottom-color:var(--blue);color:var(--blue)}
+.tab-group-btn.grp-med{color:#1d4ed8}.tab-group-btn.grp-med:hover,.tab-group-btn.grp-med.active-group{background:#eff6ff;border-bottom-color:#1d4ed8}
+.tab-group-btn.grp-dent{color:#9d174d}.tab-group-btn.grp-dent:hover,.tab-group-btn.grp-dent.active-group{background:#fdf2f8;border-bottom-color:#db2777}
+.tab-group-btn.grp-vet{color:#065f46}.tab-group-btn.grp-vet:hover,.tab-group-btn.grp-vet.active-group{background:#f0fdf4;border-bottom-color:#16a34a}
+.tab-group-btn.grp-grad{color:#7c3aed}.tab-group-btn.grp-grad:hover,.tab-group-btn.grp-grad.active-group{background:#f5f3ff;border-bottom-color:#7c3aed}
+.tab-group-btn.grp-stats{color:#b45309}.tab-group-btn.grp-stats:hover,.tab-group-btn.grp-stats.active-group{background:#fffbeb;border-bottom-color:#d97706}
+.tab-dropdown{display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--gray200);border-radius:0 0 8px 8px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:500;min-width:160px}
+.tab-group:hover .tab-dropdown,.tab-group.open .tab-dropdown{display:block}
+.tab-dd-item{padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;color:var(--gray700);white-space:nowrap;display:block}
+.tab-dd-item:hover{background:var(--gray50)}
+.tab-dd-item.active{color:var(--blue);background:#eff6ff}
+.tab-dd-divider{height:1px;background:var(--gray100);margin:3px 0}
+.tab-single{padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:none;font-family:inherit;border-bottom:3px solid transparent;white-space:nowrap;color:var(--gray600)}
+.tab-single:hover{background:var(--gray50);color:var(--gray800)}
+.tab-single.active{color:var(--blue);border-bottom-color:var(--blue)}
+</style>
+<div class="tab-bar2" id="tab-bar">
+  <!-- 마스터 -->
+  <button class="tab-single active" id="tab-master" onclick="switchTab('master')">📋 마스터</button>
+
+  <!-- 의대 -->
+  <div class="tab-group" id="grp-med">
+    <button class="tab-group-btn grp-med" onclick="toggleGroup('grp-med')">🏥 의대 ▾</button>
+    <div class="tab-dropdown">
+      <span class="tab-dd-item" onclick="switchTab('Newcastle')">Newcastle</span>
+      <span class="tab-dd-item" onclick="switchTab('UNSW')">UNSW</span>
+      <span class="tab-dd-item" onclick="switchTab('WSU')">WSU</span>
+      <span class="tab-dd-item" onclick="switchTab('Monash')">Monash</span>
+      <span class="tab-dd-item" onclick="switchTab('JCU 의대')">JCU</span>
+      <span class="tab-dd-item" onclick="switchTab('Flinders')">Flinders</span>
+      <span class="tab-dd-item" onclick="switchTab('Adelaide 의대')">Adelaide</span>
+      <span class="tab-dd-item" onclick="switchTab('Curtin')">Curtin</span>
+      <span class="tab-dd-item" onclick="switchTab('Tasmania')">Tasmania</span>
+      <span class="tab-dd-item" onclick="switchTab('Macquarie')">Macquarie</span>
+      <span class="tab-dd-item" onclick="switchTab('Sydney 의대')">Sydney</span>
+      <span class="tab-dd-item" onclick="switchTab('Melbourne 의대')">Melbourne</span>
+      <span class="tab-dd-item" onclick="switchTab('Griffith 의대')">Griffith</span>
+      <span class="tab-dd-item" onclick="switchTab('UQ 의대')">UQ</span>
+      <span class="tab-dd-item" onclick="switchTab('UWA')">UWA</span>
+    </div>
+  </div>
+
+  <!-- 치대 -->
+  <div class="tab-group" id="grp-dent">
+    <button class="tab-group-btn grp-dent" onclick="toggleGroup('grp-dent')">🦷 치대 ▾</button>
+    <div class="tab-dropdown">
+      <span class="tab-dd-item" onclick="switchTab('UQ 치대')">UQ</span>
+      <span class="tab-dd-item" onclick="switchTab('JCU 치대')">JCU</span>
+      <span class="tab-dd-item" onclick="switchTab('CSU 치대')">CSU</span>
+      <span class="tab-dd-item" onclick="switchTab('Adelaide 치대')">Adelaide</span>
+      <span class="tab-dd-item" onclick="switchTab('La Trobe 치대')">La Trobe</span>
+      <span class="tab-dd-item" onclick="switchTab('Griffith 치대')">Griffith</span>
+      <span class="tab-dd-item" onclick="switchTab('Sydney 치대')">Sydney</span>
+      <span class="tab-dd-item" onclick="switchTab('Melbourne 치대')">Melbourne</span>
+      <span class="tab-dd-item" onclick="switchTab('UWA 치대')">UWA</span>
+    </div>
+  </div>
+
+  <!-- 수의대 -->
+  <div class="tab-group" id="grp-vet">
+    <button class="tab-group-btn grp-vet" onclick="toggleGroup('grp-vet')">🐾 수의대 ▾</button>
+    <div class="tab-dropdown">
+      <span class="tab-dd-item" onclick="switchTab('UQ 수의대')">UQ</span>
+      <span class="tab-dd-item" onclick="switchTab('JCU 수의대')">JCU</span>
+      <span class="tab-dd-item" onclick="switchTab('CSU 수의대')">CSU</span>
+      <span class="tab-dd-item" onclick="switchTab('Sydney 수의대')">Sydney</span>
+      <span class="tab-dd-item" onclick="switchTab('Murdoch 수의대')">Murdoch</span>
+      <span class="tab-dd-item" onclick="switchTab('Adelaide 수의대')">Adelaide</span>
+      <div class="tab-dd-divider"></div>
+      <span class="tab-dd-item" style="font-size:10px;color:var(--gray400);padding:4px 16px">대학원</span>
+      <span class="tab-dd-item" onclick="switchTab('Sydney 수의전')">Sydney 수의전</span>
+      <span class="tab-dd-item" onclick="switchTab('Melbourne 수의전')">Melbourne 수의전</span>
+    </div>
+  </div>
+
+  <!-- 의전원/치전원 -->
+  <div class="tab-group" id="grp-grad">
+    <button class="tab-group-btn grp-grad" onclick="toggleGroup('grp-grad')">🎓 의전원/치전원 ▾</button>
+    <div class="tab-dropdown">
+      <span style="font-size:10px;color:var(--gray400);padding:6px 16px 2px;display:block;font-weight:700">의전원</span>
+      <span class="tab-dd-item" onclick="switchTab('Monash 의전원')">Monash</span>
+      <span class="tab-dd-item" onclick="switchTab('Sydney 의전원')">Sydney</span>
+      <span class="tab-dd-item" onclick="switchTab('Notre Dame 의전원')">Notre Dame</span>
+      <span class="tab-dd-item" onclick="switchTab('Wollongong 의전원')">Wollongong</span>
+      <span class="tab-dd-item" onclick="switchTab('Macquarie 의전원')">Macquarie</span>
+      <span class="tab-dd-item" onclick="switchTab('ANU 의전원')">ANU</span>
+      <span class="tab-dd-item" onclick="switchTab('Melbourne 의전원')">Melbourne</span>
+      <span class="tab-dd-item" onclick="switchTab('Deakin 의전원')">Deakin</span>
+      <span class="tab-dd-item" onclick="switchTab('UQ 의전원')">UQ</span>
+      <span class="tab-dd-item" onclick="switchTab('Griffith 의전원')">Griffith</span>
+      <span class="tab-dd-item" onclick="switchTab('Flinders 의전원')">Flinders</span>
+      <span class="tab-dd-item" onclick="switchTab('UWA 의전원')">UWA</span>
+      <div class="tab-dd-divider"></div>
+      <span style="font-size:10px;color:var(--gray400);padding:6px 16px 2px;display:block;font-weight:700">치전원</span>
+      <span class="tab-dd-item" onclick="switchTab('Sydney 치전원')">Sydney</span>
+      <span class="tab-dd-item" onclick="switchTab('Melbourne 치전원')">Melbourne</span>
+      <span class="tab-dd-item" onclick="switchTab('UWA 치전원')">UWA</span>
+    </div>
+  </div>
+
+  <!-- 담당자별 -->
+  <div class="tab-group" id="grp-staff">
+    <button class="tab-group-btn" style="color:#0369a1" onclick="toggleGroup('grp-staff')">👤 담당자별 ▾</button>
+    <div class="tab-dropdown">
+      <span class="tab-dd-item" onclick="switchTab('__staff_admin__')">🙋 나 (의대/치대)</span>
+      <span class="tab-dd-item" onclick="switchTab('__staff_admin1__')">이나영 (의대/치대)</span>
+      <span class="tab-dd-item" onclick="switchTab('__staff_admin2__')">최래미 (수의대)</span>
+      <span class="tab-dd-item" onclick="switchTab('__staff_admin3__')">김현미 (의전원/치전원)</span>
+      <span class="tab-dd-item" onclick="switchTab('__staff_admin4__')">배수진 (약대/일반대)</span>
+    </div>
+  </div>
+
+  <!-- 통계 -->
+  <button class="tab-single grp-stats" id="tab-stats" onclick="switchTab('__stats__')">📊 통계</button>
+
+  <!-- 휴지통 -->
+  <button class="tab-single" id="tab-trash" onclick="switchTab('__trash__')" style="color:#dc2626;margin-left:auto">🗑️ 휴지통</button>
+</div>
+
+<script>
+function toggleGroup(id) {
+  document.querySelectorAll('.tab-group').forEach(g => {
+    if (g.id !== id) g.classList.remove('open');
+  });
+  document.getElementById(id).classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.tab-group')) {
+    document.querySelectorAll('.tab-group').forEach(g => g.classList.remove('open'));
+  }
+});
+</script>
 <div class="main" id="main">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
     <div>
@@ -7800,12 +7936,17 @@ function buildTabs(){
 }
 function switchTab(tab){
   currentTab=tab;
-  document.querySelectorAll('.tab').forEach(t=>{
-    t.classList.toggle('active',t.dataset.tab===tab);
-  });
+  document.querySelectorAll('.tab-single').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-dd-item').forEach(t=>t.classList.remove('active'));
+  if(tab==='master') document.getElementById('tab-master')?.classList.add('active');
+  if(tab==='__stats__') document.getElementById('tab-stats')?.classList.add('active');
+  if(tab==='__trash__') document.getElementById('tab-trash')?.classList.add('active');
+  document.querySelectorAll('.tab-group').forEach(g=>g.classList.remove('open'));
   if(tab==='master') renderMaster();
   else if(tab==='__schoolmgmt__') renderSchoolMgmt();
   else if(tab==='__trash__') renderTrash();
+  else if(tab==='__stats__') renderStats();
+  else if(tab.startsWith('__staff_')) renderStaffView(tab);
   else renderSchool(tab);
 }
 
@@ -8483,6 +8624,163 @@ function renderTrash(){
   });
   h+=`</div>`;
   document.getElementById('main').innerHTML=h;
+}
+
+
+// ── 담당자별 뷰 ──
+const STAFF_MAP = {
+  '__staff_admin__':  {name:'나 (의대/치대)', filter: s => s.dept && (s.dept.includes('의대') || s.dept.includes('치대'))},
+  '__staff_admin1__': {name:'이나영 (의대/치대)', filter: s => s.dept && (s.dept.includes('의대') || s.dept.includes('치대'))},
+  '__staff_admin2__': {name:'최래미 (수의대)', filter: s => s.dept && s.dept.includes('수의대')},
+  '__staff_admin3__': {name:'김현미 (의전원/치전원)', filter: s => s.dept && (s.dept.includes('의전원') || s.dept.includes('치전원'))},
+  '__staff_admin4__': {name:'배수진 (약대/일반대)', filter: s => s.dept && (s.dept.includes('약대') || s.dept.includes('일반대'))},
+};
+
+function renderStaffView(tabKey) {
+  const staff = STAFF_MAP[tabKey];
+  if (!staff) return;
+  const filtered = STUDENTS.filter(staff.filter);
+  let h = `<div style="margin-bottom:1rem">
+    <div style="font-size:16px;font-weight:700;color:var(--navy)">👤 ${staff.name}</div>
+    <div style="font-size:12px;color:var(--gray400);margin-top:4px">담당 학생 ${filtered.length}명</div>
+  </div>`;
+  if (filtered.length === 0) {
+    h += `<div style="text-align:center;padding:60px;color:var(--gray400)">
+      <div style="font-size:48px;margin-bottom:16px">📭</div>
+      <div style="font-size:16px;font-weight:600">담당 학생이 없어요</div>
+    </div>`;
+  } else {
+    h += `<div class="tbl-wrap"><table><thead><tr>
+      <th>#</th><th>이름</th><th>희망학과</th><th>SAT</th><th>IB</th><th>CSAT</th><th>GPA</th>
+      <th>IELTS</th><th>PTE</th><th>TOEFL</th><th>ISAT</th><th>UCAT</th><th>비고</th>
+    </tr></thead><tbody>`;
+    filtered.forEach((s, i) => {
+      h += `<tr>
+        <td>${i+1}</td>
+        <td class="nm"><span style="font-weight:700">${s.name}</span></td>
+        <td style="font-size:11px">${s.dept||''}</td>
+        <td>${s.sat||''}</td><td>${s.ib||''}</td><td>${s.csat||''}</td><td>${s.gpa||''}</td>
+        <td>${s.ielts?.o||''}</td><td>${s.pte?.o||''}</td><td>${s.toefl?.o||''}</td>
+        <td>${s.isat?.os||''}</td>
+        <td>${s.ucat?'✅':''}</td>
+        <td class="nt">${s.note||''}</td>
+      </tr>`;
+    });
+    h += `</tbody></table></div>`;
+  }
+  document.getElementById('main').innerHTML = h;
+}
+
+// ── 통계 대시보드 ──
+function renderStats() {
+  const total = STUDENTS.length;
+  const byDept = {};
+  STUDENTS.forEach(s => {
+    const depts = (s.dept||'기타').split('/');
+    depts.forEach(d => {
+      d = d.trim();
+      byDept[d] = (byDept[d]||0) + 1;
+    });
+  });
+
+  // 학교별 지원현황
+  const medSchools = ['newcastle','unsw','wsu','monash','tasmania','flinders','adelaide 의대','curtin','macquarie','sydney 의대','melbourne 의대','griffith 의대','uq 의대','uwa'];
+  const dentSchools = ['uq 치대','jcu 치대','csu 치대','adelaide 치대','la trobe 치대','griffith 치대','uwa 치대'];
+
+  function getAppStats(schools) {
+    return schools.map(sch => {
+      const counts = {완료:0, 예정:0, 보류:0, 해당없음:0, 미정:0};
+      STUDENTS.forEach(s => {
+        const val = (s.apps?.[sch]||'').trim();
+        if(val === '완료') counts.완료++;
+        else if(val === '예정') counts.예정++;
+        else if(val === '보류') counts.보류++;
+        else if(val === '해당없음') counts.해당없음++;
+        else if(val) counts.미정++;
+      });
+      return {name: sch, ...counts};
+    });
+  }
+
+  const medStats = getAppStats(medSchools);
+  const dentStats = getAppStats(dentSchools);
+
+  let h = `
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+    <div style="font-size:18px;font-weight:700;color:var(--navy)">📊 통계 대시보드</div>
+  </div>
+
+  <!-- 요약 카드 -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:1.5rem">
+    <div style="background:#fff;border:1px solid var(--gray200);border-radius:10px;padding:16px;text-align:center">
+      <div style="font-size:28px;font-weight:800;color:var(--navy)">${total}</div>
+      <div style="font-size:11px;color:var(--gray400);margin-top:4px">전체 학생</div>
+    </div>`;
+
+  Object.entries(byDept).sort((a,b)=>b[1]-a[1]).forEach(([dept, cnt]) => {
+    const colors = {
+      '의대':'#1d4ed8','치대':'#9d174d','수의대':'#065f46',
+      '의전원':'#7c3aed','치전원':'#6d28d9','약대':'#92400e','일반대':'#374151'
+    };
+    const color = colors[dept] || '#374151';
+    h += `<div style="background:#fff;border:1px solid var(--gray200);border-radius:10px;padding:16px;text-align:center">
+      <div style="font-size:28px;font-weight:800;color:${color}">${cnt}</div>
+      <div style="font-size:11px;color:var(--gray400);margin-top:4px">${dept}</div>
+    </div>`;
+  });
+
+  h += `</div>
+
+  <!-- 의대 지원현황 -->
+  <div style="background:#fff;border:1px solid var(--gray200);border-radius:10px;padding:16px;margin-bottom:1rem">
+    <div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:12px">🏥 의대 지원현황</div>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="background:#f8fafc">
+        <th style="padding:6px 10px;text-align:left;font-weight:600;color:var(--gray600)">학교</th>
+        <th style="padding:6px 10px;text-align:center;color:#92400e">완료</th>
+        <th style="padding:6px 10px;text-align:center;color:#7c2d12">예정</th>
+        <th style="padding:6px 10px;text-align:center;color:#4c1d95">보류</th>
+        <th style="padding:6px 10px;text-align:center;color:var(--gray400)">해당없음</th>
+      </tr></thead><tbody>`;
+
+  medStats.forEach(s => {
+    if(s.완료+s.예정+s.보류+s.해당없음 === 0) return;
+    h += `<tr style="border-top:1px solid var(--gray100)">
+      <td style="padding:6px 10px;font-weight:600">${s.name}</td>
+      <td style="padding:6px 10px;text-align:center">${s.완료 ? `<span style="background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:10px;font-weight:700">${s.완료}</span>` : '-'}</td>
+      <td style="padding:6px 10px;text-align:center">${s.예정 ? `<span style="background:#fff7ed;color:#7c2d12;padding:2px 8px;border-radius:10px;font-weight:700">${s.예정}</span>` : '-'}</td>
+      <td style="padding:6px 10px;text-align:center">${s.보류 ? `<span style="background:#f5f3ff;color:#4c1d95;padding:2px 8px;border-radius:10px;font-weight:700">${s.보류}</span>` : '-'}</td>
+      <td style="padding:6px 10px;text-align:center;color:var(--gray400)">${s.해당없음||'-'}</td>
+    </tr>`;
+  });
+
+  h += `</tbody></table></div></div>
+
+  <!-- 치대 지원현황 -->
+  <div style="background:#fff;border:1px solid var(--gray200);border-radius:10px;padding:16px;margin-bottom:1rem">
+    <div style="font-size:13px;font-weight:700;color:#7c2d12;margin-bottom:12px">🦷 치대 지원현황</div>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="background:#f8fafc">
+        <th style="padding:6px 10px;text-align:left;font-weight:600;color:var(--gray600)">학교</th>
+        <th style="padding:6px 10px;text-align:center;color:#92400e">완료</th>
+        <th style="padding:6px 10px;text-align:center;color:#7c2d12">예정</th>
+        <th style="padding:6px 10px;text-align:center;color:#4c1d95">보류</th>
+        <th style="padding:6px 10px;text-align:center;color:var(--gray400)">해당없음</th>
+      </tr></thead><tbody>`;
+
+  dentStats.forEach(s => {
+    if(s.완료+s.예정+s.보류+s.해당없음 === 0) return;
+    h += `<tr style="border-top:1px solid var(--gray100)">
+      <td style="padding:6px 10px;font-weight:600">${s.name}</td>
+      <td style="padding:6px 10px;text-align:center">${s.완료 ? `<span style="background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:10px;font-weight:700">${s.완료}</span>` : '-'}</td>
+      <td style="padding:6px 10px;text-align:center">${s.예정 ? `<span style="background:#fff7ed;color:#7c2d12;padding:2px 8px;border-radius:10px;font-weight:700">${s.예정}</span>` : '-'}</td>
+      <td style="padding:6px 10px;text-align:center">${s.보류 ? `<span style="background:#f5f3ff;color:#4c1d95;padding:2px 8px;border-radius:10px;font-weight:700">${s.보류}</span>` : '-'}</td>
+      <td style="padding:6px 10px;text-align:center;color:var(--gray400)">${s.해당없음||'-'}</td>
+    </tr>`;
+  });
+
+  h += `</tbody></table></div></div>`;
+  document.getElementById('main').innerHTML = h;
 }
 
 // ── 초기화 ── (로그인 후 DB에서 불러옴)
